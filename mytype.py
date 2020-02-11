@@ -5,6 +5,7 @@ Created on Sun Feb  2 19:22:18 2020
 @author: jupiter
 """
 import random
+import configparser
 
 def whattype():
     typelist = ['normal 😐','fighting 👊','flying 🌬️','poison ☠️','ground ⛰️','rock 🗿','bug 🐛','ghost 👻'\
@@ -25,12 +26,10 @@ def whattype():
         return ['a', type1]
     
 def whataesthet():
-    adjf = open('adjectives.txt','r')
-    adjectives = adjf.readlines()
-    adjf.close()
-    nounf = open('nouns.txt','r')
-    nouns = nounf.readlines()
-    nounf.close()
+    config = configparser.ConfigParser()
+    config.read('betgame.ini')
+    adjectives = config['MYTYPE']['adjectives'].split('\n')
+    nouns = config['MYTYPE']['nouns'].split('\n')
     
     adj1 = random.choice(adjectives)
     adj2 = random.choice(adjectives)
@@ -38,24 +37,18 @@ def whataesthet():
         adj2 = random.choice(adjectives)
     noun = random.choice(nouns)
     
-    return adj1.rstrip('\n'),adj2.rstrip('\n'),noun.rstrip('\n')
+    return adj1,adj2,noun
 
 def whatclass():
-    racef   = open('races.txt','r')
-    races   = racef.readlines()
-    racef.close()
+    config = configparser.ConfigParser()
+    config.read('betgame.ini')
+    races = config['MYTYPE']['races'].split('\n')
+    classes = config['MYTYPE']['classes'].split('\n')
+    quirks = config['MYTYPE']['quirks'].split('\n')
     
-    classf  = open('classes.txt','r')
-    classes = classf.readlines()
-    classf.close()
-    
-    quirkf  = open('quirks.txt','r')
-    quirks  = quirkf.readlines()
-    quirkf.close()
-    
-    race    = random.choice(races).rstrip('\n')
-    clas    = random.choice(classes).rstrip('\n')
-    quirk   = random.choice(quirks).rstrip('\n')
+    race    = random.choice(races)
+    clas    = random.choice(classes)
+    quirk   = random.choice(quirks)
     return race, clas, quirk
 
     
