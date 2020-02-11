@@ -108,7 +108,7 @@ async def on_message(message):
         betters = config['FIGHT']['betters']
         if str(message.author) in betters:
             await message.add_reaction('👎')
-            await asyncio.wait(0.5)
+            await asyncio.sleep(0.5)
             await message.channel.send('You already bet.')
             return
         if not config.has_option('USERS',str(message.author)):
