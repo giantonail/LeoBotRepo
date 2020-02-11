@@ -66,4 +66,3 @@ def fightgame():
         config.set('FIGHT', 'loser', p1f)
     with open('betgame.ini', 'w+') as configfile:
         config.write(configfile)
-
