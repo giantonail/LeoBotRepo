@@ -166,7 +166,7 @@ async def on_message(message):
         board = scorekeep.leaderboard()
         lbmess = ''
         for i in range(len(board)):
-            tempstr = '{}. {} {}\n'.format(i+1,board[i][0],board[i][1])
+            tempstr = '{}. {} {}\n'.format(len(board)-i,board[i][0],board[i][1])
             lbmess += tempstr
         await message.channel.send(lbmess)
     

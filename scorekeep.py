@@ -36,6 +36,7 @@ def leaderboard():
     users = [list(elem) for elem in userstup]
     for i in range(len(users)):
         users[i][0] = users[i][0].translate({ord(ch): None for ch in '#0123456789'})
+        users[i][1] = int(users[i][1])
     users.sort(key = lambda x: x[1])
     return users
 
@@ -66,3 +67,4 @@ def fightgame():
         config.set('FIGHT', 'loser', p1f)
     with open('betgame.ini', 'w+') as configfile:
         config.write(configfile)
+        
