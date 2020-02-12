@@ -16,7 +16,6 @@ import configparser
 
 import discord
 from dotenv import load_dotenv
-global fighting
 
 
 load_dotenv()
@@ -35,12 +34,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    global fighting
-    if message.author == client.user:
+    if message.author.bot:
         return
-
-    if 'slut' in message.content.lower():
-        await message.channel.send('Did somebody say slut?')
         
     if message.content == '!myaesthetic':
         await message.channel.send('{} your aesthetic is {} {} {}.'.format(message.author.mention,*mytype.whataesthet()))
@@ -66,12 +61,6 @@ async def on_message(message):
         score = scorekeep.readscore(str(message.author))
         await message.channel.send('Your score is {}'.format(score))
 
-        
-        
-        
-        
-        
-        
     if message.content == '!fight':
         scorekeep.fightgame()
         config = configparser.ConfigParser()
@@ -156,7 +145,6 @@ async def on_message(message):
         else:
             scorekeep.writescore(str(message.author), currentscore - bet)
 
-        
     if message.content == '!lb':
         config = configparser.ConfigParser()
         config.read('betgame.ini')
