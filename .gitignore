@@ -1,1 +1,8 @@
+# Can't upload to internet, contains token
 *.env
+# These files change as the code is run
+betgame.ini
+fightimage.jpg
+__pycache__/
+#This file is the Discord Bot's avatar
+Bot_Image.jpg
