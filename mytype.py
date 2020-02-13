@@ -7,7 +7,7 @@ Created on Sun Feb  2 19:22:18 2020
 import random
 import configparser
 
-def whattype():
+def whattype():         #return random pokemon type
     typelist = ['normal 😐','fighting 👊','flying 🌬️','poison ☠️','ground ⛰️','rock 🗿','bug 🐛','ghost 👻'\
                 ,'steel 🔩','fire 🔥','water 💦','grass 🌱','electric ⚡','psychic 👁‍','ice ❄️','dragon 🐉','dark 🌙','fairy ✨']
     type1 = random.choice(typelist).capitalize()
@@ -25,7 +25,7 @@ def whattype():
     else:
         return ['a', type1]
     
-def whataesthet():
+def whataesthet():          #return random list of two adjectives and a noun as an aesthetic
     config = configparser.ConfigParser()
     config.read('betgame.ini')
     adjectives = config['MYTYPE']['adjectives'].split('\n')
@@ -39,7 +39,7 @@ def whataesthet():
     
     return adj1,adj2,noun
 
-def whatclass():
+def whatclass():            #returns a race, class, and quirk for dnd character
     config = configparser.ConfigParser()
     config.read('betgame.ini')
     races = config['MYTYPE']['races'].split('\n')
