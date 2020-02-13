@@ -38,7 +38,10 @@ def leaderboard():
         users[i][0] = users[i][0].translate({ord(ch): None for ch in '#0123456789'})
         users[i][1] = int(users[i][1])
     users.sort(key = lambda x: x[1])
-    return users
+    if len(users) > 10:
+        return users[-10:]
+    else:
+        return users
 
 
 def fightgame():

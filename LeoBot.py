@@ -59,7 +59,10 @@ async def on_message(message):
             await message.channel.send('Fight underway, wait until it\'s over.')
             return
         score = scorekeep.readscore(str(message.author))
-        await message.channel.send('Your score is {}'.format(score))
+        if str(message.author) == 'bigdickrick#6614':
+            await message.channel.send('Your score is {}, but you\'re 1498500 in debt, pal.'.format(score))
+        else:
+            await message.channel.send('Your score is {}'.format(score))
 
     if message.content == '!fight':
         scorekeep.fightgame()
