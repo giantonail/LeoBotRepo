@@ -8,7 +8,7 @@ import random
 import configparser
 
 def whattype():         #return random pokemon type
-    typelist = ['normal 😐','fighting 👊','flying 🌬️','poison ☠️','ground ⛰️','rock 🗿','bug 🐛','ghost 👻'\
+    typelist = ['normal 😐','fighting 👊','flying 🌬️','poison ☠️','ground ⛰️','rock 🗿','bug 🐛','ghost 👻'
                 ,'steel 🔩','fire 🔥','water 💦','grass 🌱','electric ⚡','psychic 👁‍','ice ❄️','dragon 🐉','dark 🌙','fairy ✨']
     type1 = random.choice(typelist).capitalize()
     ran = random.randint(1,100)

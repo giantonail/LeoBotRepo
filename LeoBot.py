@@ -120,6 +120,7 @@ async def on_message(message):
         bet = int(messlst[2])
         currentscore = int(scorekeep.readscore(str(message.author))) #get message author current score
         if currentscore <= 0:                               #if author broke, give money
+            config.set('DEBT',str(message.author),str(1000+int(config['DEBT'][str(message.author)])))
             currentscore = 1000
         if bet > currentscore:                              #fail if bet higher than money available
             await message.add_reaction('👎')
@@ -145,7 +146,45 @@ async def on_message(message):
                 scorekeep.writescore(str(message.author), currentscore + bet * (p1n/p2n))            
         else:
             scorekeep.writescore(str(message.author), currentscore - bet)
-
+            
+    if message.content == '!mydebt':            #Tells author how much money they owe
+        debt = scorekeep.readgeneral(str(message.author),'DEBT','betgame.ini')
+        await message.channel.send('You owe me {} points.'.format(debt))
+        
+    if message.content.startswith('!paydebt'):
+        config = configparser.ConfigParser()
+        config.read('betgame.ini')
+        if config['FIGHT']['fighting'] == 'True':
+            await message.channel.send('Wait for the fight to be over please.')
+            return
+        messlist = message.content.split()
+        debt = int(scorekeep.readgeneral(str(message.author),'DEBT','betgame.ini'))
+        if len(messlist) != 2:
+            await message.add_reaction('👎')
+            return
+        if not messlist[1].isdigit():
+            await message.add_reaction('👎')
+            return
+        payment = int(messlist[1])
+        currentscore = int(scorekeep.readscore(str(message.author)))
+        if payment > currentscore:
+            await message.add_reaction('👎')
+            return
+        if payment <= 0:
+            await message.add_reaction('👎')
+            return
+        if payment > debt:
+            payment = debt
+        newdebt = debt - payment
+        newscore = currentscore - payment
+        scorekeep.writegeneral(str(message.author),round(newdebt),'DEBT','betgame.ini')
+        scorekeep.writescore(str(message.author), newscore)
+        if newdebt == 0:
+            await message.channel.send('We\'re square now, stay on my good side punk.')
+        else:
+            await message.channel.send('You still owe me {} points.'.format(newdebt))
+        
+        
     if message.content == '!lb':                            #displays leaderboard on command !lb
         config = configparser.ConfigParser()                #initialize configparser
         config.read('betgame.ini')
@@ -160,7 +199,10 @@ async def on_message(message):
         await message.channel.send(lbmess)
     
     if message.content == '!leohelp':                       #lists commands available in LeoBot on !leohelp
-        helpmess = '!myaesthetic - assigns your aesthetic\n!mytype - assigns your Pokemon type\n!myscore - displays your current LeoBets score\n!fight - begins a LeoBets fight\n!bet {fighter} {amount} - places bet on LeoBets fight\n!leaderboard - displays current LeoBets leaderboard'
+        helpmess = '!myaesthetic - assigns your aesthetic\n!mytype - assigns your Pokemon type\n!myscore'\
+        '- displays your current LeoBets score\n!fight - begins a LeoBets fight\n!bet {fighter} {amount} -'\
+        'places bet on LeoBets fight\n!leaderboard - displays current LeoBets leaderboard\n'\
+        '!mydebt - displays how many points LeoBot has loaned you\n!paydebt {amount} - allows you to repay some of the money you owe LeoBot'
         await message.channel.send(helpmess)
         
         

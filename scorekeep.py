@@ -16,6 +16,12 @@ def writescore(author, score):                          #Writes score config fil
     with open('betgame.ini', 'w+') as configfile:       #update config file
         config.write(configfile)
         
+def writegeneral(author, score, section, file):         #Generalized Writescore
+    config = configparser.ConfigParser()                #initialize configparser
+    config.read(file)                                   #read config
+    config.set(section, str(author), str(score))        #set option to score
+    with open(file, 'w+') as configfile:                #update config file
+        config.write(configfile)
 
 def readscore(author):                                  #gets score from config file, adds option if not present
     authstr = str(author)                               #casts author to string
@@ -25,9 +31,25 @@ def readscore(author):                                  #gets score from config 
         return config['USERS'][author]
     else:                                               #if it isn't, add option and read value    
         config.set('USERS', authstr, '1000')
+        config.set('DEBT',authstr,'0')
         with open('betgame.ini', 'w+') as configfile:
             config.write(configfile)
         return readscore(author)
+    
+def readgeneral(author,section,file):                   #generalized form of readscore, reads from any section and any config
+    authstr = str(author)                               #casts author to string
+    config = configparser.ConfigParser()                #initialize configparser
+    config.read(file)                                   #read config
+    if config.has_option(section,authstr):              #check if author is an option, if it is read value
+        return config[section][author]
+    else:                                               #if it isn't, add option and read value    
+        config.set(section, authstr, '0')
+        with open(file, 'w+') as configfile:
+            config.write(configfile)
+        return readgeneral(author,section,file)
+    
+    
+    
     
 def leaderboard():                                      #generate list of lists [user,score] users
     config = configparser.ConfigParser()                # in order of score least to greatest
