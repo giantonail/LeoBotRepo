@@ -3,8 +3,3 @@
 # These files change as the code is run
 fightimage.jpg
 __pycache__/
-#This file is the Discord Bot's avatar
-LeoBotImage.jpg
-LeoBotIcon.ico
-#This is a batch file for running the bot on my PC
-LeoBot.bat
